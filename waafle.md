@@ -12,7 +12,9 @@ The pipeline requires the issue of 3 different commands:
 This script executes a custom BLAST search of a set of contigs against a WAAFLE-formatted database.
 A sample call to `waafle_search` with input contigs `input.fna` and the WAAFLE database (or a costum database) located in a directory would be: 
 
-```waafle_search input.fna path/waafledb```
+```
+waafle_search input.fna path/waafledb
+```
 
 The waafle database is in the format of three files (.nhr .nsq .nsl) so, if you decide to modify the names, make so that you can call them with the same command (like waafledb.*, so you can just put path/waafledb).
 
