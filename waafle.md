@@ -19,10 +19,11 @@ The waafle database is in the format of three files (.nhr .nsq .nsl) so, if you 
 Other commands for the `--help` menu are:
 
 `waafle_search [-h] [--blastn <path>] [--threads <int>] [--out <path>] query db`
- ``` --blastn <path>  path to blastn binary   [default: $PATH]
+ ```
+  --blastn <path>  path to blastn binary   [default: $PATH]
   --threads <int>  number of CPU cores to use in blastn search   [default: 1]
-  --out <path>     path for blast output file   [default: <derived from input>] ```
-
+  --out <path>     path for blast output file   [default: <derived from input>] 
+```
 This command produces an output file `contigs.blastout` in the same location as the input contigs. 
 The columns of the output match the requested columns from the BLAST command. Most critically, the first and second columns provide a mapping from the input contigs to genes in the demo database (subject sequences). Each subject sequence has the following format:
 
