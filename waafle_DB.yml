@@ -1,0 +1,19 @@
+name: waafle
+channels:
+  - bioconda
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3
+  - numpy=1.13.3
+  - bioconda::blast=2.10.1
+  - bioconda::bowtie2
+  - pip
+  - pip:
+          - waafle
+
+#Automatically install waafle db from the waafle git repository
+post_link:
+        commands:
+                - wget http://huttenhower.sph.harvard.edu/waafle_data/waafledb.tar.gz
+                - wget http://huttenhower.sph.harvard.edu/waafle_data/waafledb_taxonomy.tsv
