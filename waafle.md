@@ -2,7 +2,7 @@
 This is a brief tutorial to use waafle. All information are taken from the waafle github repository https://github.com/biobakery/waafle/tree/main. 
 ## How to install
 To install the tool, we made a conda enviroment which contain all the dependencies to make it work. The YAML file can be found in waafle.yml. You will just have to issue the command:
-`conda env create -f waalfe.yml`
+`conda env create -f waafle.yml`
 ## How to use the tool
 The pipeline requires the issue of 3 different commands: 
 - `waafle_search` used to search the input contigs against the WAAFLE-formatted database
@@ -51,7 +51,7 @@ More info at https://www.metagenomics.wiki/tools/blast/blastn-output-format-6
 
 ## waafle_genecaller
 
-In order to classify the contigs, WAAFLE compares the BLAST hits generated above to a set of predicted protein-coding loci within the contigs, as defined by a GFF file. WAAFLE includes a utility to call genes within contigs based on the BLAST output itself by clustering the start and stop coordinates of hits along the length of the contig.
+In order to classify the contigs, WAAFLE compares the BLAST hits generated above to a set of predicted protein-coding loci within the contigs, as defined by a GFF file. WAAFLE includes a utility to call genes within contigs based on the BLAST output itself by clustering the start and stop coordinates of hits along the length of the contig. OPTIONALLY, supply your own GFF file.
 
 ```
 waafle_genecaller input_contigs.blastout
@@ -59,7 +59,7 @@ waafle_genecaller input_contigs.blastout
 This produced a file in GFF format. Columns 1, 4, and 5 are the most important: they provide an index of the gene start and stop coordinates within each contig.
 The columns of the .gff file are the following:
 
-- seqname - name of the chromosome or scaffold; chromosome names can be given with or without the 'chr' prefix. Important note: the seqname must be one used within Ensembl, i.e. a standard chromosome name or an Ensembl
+- \b seqname \ - name of the chromosome or scaffold; chromosome names can be given with or without the 'chr' prefix. Important note: the seqname must be one used within Ensembl, i.e. a standard chromosome name or an Ensembl
 - identifier such as a scaffold ID, without any additional content such as species or assembly. See the example GFF output below.
 - source - name of the program that generated this feature, or the data source (database or project name)
 - feature - feature type name, e.g. Gene, Variation, Similarity
@@ -82,5 +82,26 @@ Other commands from the `--help` menu are:
   --stranded    only merge hits into hits/genes of the same strandedness [default: off]
 ```
 
-## waafle_genecaller
-Compares per-species BLAST hits with the contig's gene coordinates (loci) to try to find one- and two-species explanations for contigs (as described in the algorithm overview above). This step is peformed by the waafle_orgscorer utility. This utility has many tunable parameters, most of which are devoted to filtering and formatting the outputs.
+## waafle_orgscorer
+Compares per-species BLAST hits with the contig's gene coordinates (loci) to try to find one- and two-species explanations for contigs. This utility has many tunable parameters, most of which are devoted to filtering and formatting the outputs. It has 4 required parameters: `contigs blastout gff taxonomy`.
+
+```
+waafle_orgscorer input_contigs.fna contigs.blastout contigs.gff input_taxonomy.tsv
+```
+
+Tunable commands from the `--help` menu are:
+
+`waafle_orgscorer.py [-h] [--outdir <path>] [--basename <str>]
+                           [--write-details] [--quiet] [-k1 <0.0-1.0>]
+                           [-k2 <0.0-1.0>]
+                           [--disambiguate-one <report-best/meld>]
+                           [--disambiguate-two <report-best/jump/meld>]
+                           [--range <float>] [--jump-taxonomy <1-N>]
+                           [--allow-lca] [--ambiguous-fraction <0.0-1.0>]
+                           [--clade-genes <1-N>] [--clade-leaves <1-N>]
+                           [--sister-penalty <0.0-1.0>]
+                           [--weak-loci <ignore/penalize/assign-unknown>]
+                           [--transfer-annotations <lenient/strict/very-strict>]
+                           [--min-overlap <0.0-1.0>] [--min-gene-length <int>]
+                           [--min-scov <float>] [--stranded]
+                           contigs blastout gff taxonomy`
