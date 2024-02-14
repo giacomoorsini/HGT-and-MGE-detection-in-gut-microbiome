@@ -95,7 +95,8 @@ This produces three output files:
 
 Tunable commands from the `--help` menu are:
 
-```waafle_orgscorer.py [-h] [--outdir <path>] [--basename <str>]
+```
+waafle_orgscorer.py [-h] [--outdir <path>] [--basename <str>]
                            [--write-details] [--quiet] [-k1 <0.0-1.0>]
                            [-k2 <0.0-1.0>]
                            [--disambiguate-one <report-best/meld>]
