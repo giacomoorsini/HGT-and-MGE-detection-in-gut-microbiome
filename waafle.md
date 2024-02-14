@@ -59,16 +59,15 @@ waafle_genecaller input_contigs.blastout
 This produced a file in GFF format. Columns 1, 4, and 5 are the most important: they provide an index of the gene start and stop coordinates within each contig.
 The columns of the .gff file are the following:
 
-- \b seqname \ - name of the chromosome or scaffold; chromosome names can be given with or without the 'chr' prefix. Important note: the seqname must be one used within Ensembl, i.e. a standard chromosome name or an Ensembl
-- identifier such as a scaffold ID, without any additional content such as species or assembly. See the example GFF output below.
-- source - name of the program that generated this feature, or the data source (database or project name)
-- feature - feature type name, e.g. Gene, Variation, Similarity
-- start - Start position* of the feature, with sequence numbering starting at 1.
-- end - End position* of the feature, with sequence numbering starting at 1.
-- score - A floating point value.
-- strand - defined as + (forward) or - (reverse).
-- frame - One of '0', '1' or '2'. '0' indicates that the first base of the feature is the first base of a codon, '1' that the second base is the first base of a codon, and so on..
-- attribute - A semicolon-separated list of tag-value pairs, providing additional information about each feature.
+- ** seqname ** - name of the chromosome or scaffold; chromosome names can be given with or without the 'chr' prefix. Important note: the seqname must be one used within Ensembl, i.e. a standard chromosome name or an Ensembl
+- **identifier** such as a scaffold ID, without any additional content such as species or assembly. See the example GFF output below.
+- **feature** - feature type name, e.g. Gene, Variation, Similarity
+- **start** - Start position* of the feature, with sequence numbering starting at 1.
+- **end** - End position* of the feature, with sequence numbering starting at 1.
+- **score** - A floating point value.
+- **strand** - defined as + (forward) or - (reverse).
+- **frame** - One of '0', '1' or '2'. '0' indicates that the first base of the feature is the first base of a codon, '1' that the second base is the first base of a codon, and so on..
+- **attribute** - A semicolon-separated list of tag-value pairs, providing additional information about each feature.
 
 Other commands from the `--help` menu are:
 
@@ -105,3 +104,31 @@ Tunable commands from the `--help` menu are:
                            [--min-overlap <0.0-1.0>] [--min-gene-length <int>]
                            [--min-scov <float>] [--stranded]
                            contigs blastout gff taxonomy`
+  `--outdir <path>`       directory for writing output files [default: .]
+  `--basename <str> `     basename for output files [default: derived from contigs file]
+  `--write-details `      make an additional output file with per-gene clade scores [default: off]
+  `--quiet`               don't show running progress [default: off]
+
+main parameters:
+  `-k1 <0.0-1.0>, --one-clade-threshold <0.0-1.0>` minimum per-gene score for explaining a contig with a single clade [default: 0.5]
+  `-k2 <0.0-1.0>, --two-clade-threshold <0.0-1.0>` minimum per-gene score for explaining a contig with a pair of clades (putative LGT) [default: 0.8]
+  `--disambiguate-one <report-best/meld>` what to do when other one-clade explanations fall within <--range> of the best explanation [default: meld]
+  `--disambiguate-two <report-best/jump/meld>` what to do when other two-clade explanations fall within <--range> of the best explanation [default: meld]
+  `--range <float>`       when disambiguating, consider explanations within <--range> of the best explanation [default: 0.05]
+  `--jump-taxonomy <1-N>` before starting, perform 1+ 'jumps' up the taxonomy (e.g. species->genus) [default: off]
+
+post-detection LGT filters:
+  `--allow-lca`           when melding LGT clades, allow the LGT LCA to occur as a melded clade [default: off]
+  `--ambiguous-fraction <0.0-1.0>` allowed fraction of ambiguous (A OR B) gene length in a putative A+B contig [default: 0.1]
+  `--ambiguous-threshold <off/lenient/strict>` homology threshold for defining an ambiguous (A OR B) gene [default: lenient]
+  `--sister-penalty <off/lenient/strict>` penalize homologs of missing genes in sisters of LGT clades (or just recipient if known) [default: strict]
+  `--clade-genes <1-N>`   required minimum genes assigned to each LGT clade [default: off]
+  `--clade-leaves <1-N>`  required minimum leaf count supporting each LGT clade (or just recipient if known) [default: off]
+
+gene-hit merge parameters:
+  `--weak-loci <ignore/penalize/assign-unknown>` method for handling loci that are never assigned to known clades [default: ignore]
+  `--annotation-threshold <off/lenient/strict>`  stringency of gene annotation transfer to loci [default: lenient]
+  `--min-overlap <0.0-1.0>` only merge hits into genes if the longer of the two covers this portion of the shorter [default: 0.1]
+  `--min-gene-length <int>` minimum allowed gene length [default: 200]
+  `--min-scov <float>`    (modified) scoverage filter for hits to gene catalog [default: 0.75]
+  `--stranded `           only merge hits into hits/genes of the same strandedness [default: off]
