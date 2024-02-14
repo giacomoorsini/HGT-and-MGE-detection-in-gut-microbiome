@@ -87,6 +87,11 @@ Compares per-species BLAST hits with the contig's gene coordinates (loci) to try
 ```
 waafle_orgscorer input_contigs.fna contigs.blastout contigs.gff input_taxonomy.tsv
 ```
+This produces three output files:
+
+- `demo_contigs.lgt.tsv` contains a description of predicted LGT events.
+- `demo_contigs.no_lgt.tsv` contains descriptions of contigs explained by single species/clades.
+- `demo_contigs.unclassified.tsv` contains descriptions of contigs that could not be explained by either single species or pairs of species.
 
 Tunable commands from the `--help` menu are:
 
@@ -104,31 +109,32 @@ Tunable commands from the `--help` menu are:
                            [--min-overlap <0.0-1.0>] [--min-gene-length <int>]
                            [--min-scov <float>] [--stranded]
                            contigs blastout gff taxonomy`
-  `--outdir <path>`       directory for writing output files [default: .]
-  `--basename <str> `     basename for output files [default: derived from contigs file]
-  `--write-details `      make an additional output file with per-gene clade scores [default: off]
-  `--quiet`               don't show running progress [default: off]
+                           
+-  `--outdir <path>`       directory for writing output files [default: .]
+-  `--basename <str> `     basename for output files [default: derived from contigs file]
+-  `--write-details `      make an additional output file with per-gene clade scores [default: off]
+-  `--quiet`               don't show running progress [default: off]
 
 main parameters:
-  `-k1 <0.0-1.0>, --one-clade-threshold <0.0-1.0>` minimum per-gene score for explaining a contig with a single clade [default: 0.5]
-  `-k2 <0.0-1.0>, --two-clade-threshold <0.0-1.0>` minimum per-gene score for explaining a contig with a pair of clades (putative LGT) [default: 0.8]
-  `--disambiguate-one <report-best/meld>` what to do when other one-clade explanations fall within <--range> of the best explanation [default: meld]
-  `--disambiguate-two <report-best/jump/meld>` what to do when other two-clade explanations fall within <--range> of the best explanation [default: meld]
-  `--range <float>`       when disambiguating, consider explanations within <--range> of the best explanation [default: 0.05]
-  `--jump-taxonomy <1-N>` before starting, perform 1+ 'jumps' up the taxonomy (e.g. species->genus) [default: off]
+-  `-k1 <0.0-1.0>, --one-clade-threshold <0.0-1.0>` minimum per-gene score for explaining a contig with a single clade [default: 0.5]
+-  `-k2 <0.0-1.0>, --two-clade-threshold <0.0-1.0>` minimum per-gene score for explaining a contig with a pair of clades (putative LGT) [default: 0.8]
+-  `--disambiguate-one <report-best/meld>` what to do when other one-clade explanations fall within <--range> of the best explanation [default: meld]
+-  `--disambiguate-two <report-best/jump/meld>` what to do when other two-clade explanations fall within <--range> of the best explanation [default: meld]
+-  `--range <float>`       when disambiguating, consider explanations within <--range> of the best explanation [default: 0.05]
+-  `--jump-taxonomy <1-N>` before starting, perform 1+ 'jumps' up the taxonomy (e.g. species->genus) [default: off]
 
 post-detection LGT filters:
-  `--allow-lca`           when melding LGT clades, allow the LGT LCA to occur as a melded clade [default: off]
-  `--ambiguous-fraction <0.0-1.0>` allowed fraction of ambiguous (A OR B) gene length in a putative A+B contig [default: 0.1]
-  `--ambiguous-threshold <off/lenient/strict>` homology threshold for defining an ambiguous (A OR B) gene [default: lenient]
-  `--sister-penalty <off/lenient/strict>` penalize homologs of missing genes in sisters of LGT clades (or just recipient if known) [default: strict]
-  `--clade-genes <1-N>`   required minimum genes assigned to each LGT clade [default: off]
-  `--clade-leaves <1-N>`  required minimum leaf count supporting each LGT clade (or just recipient if known) [default: off]
+-  `--allow-lca`           when melding LGT clades, allow the LGT LCA to occur as a melded clade [default: off]
+-  `--ambiguous-fraction <0.0-1.0>` allowed fraction of ambiguous (A OR B) gene length in a putative A+B contig [default: 0.1]
+-  `--ambiguous-threshold <off/lenient/strict>` homology threshold for defining an ambiguous (A OR B) gene [default: lenient]
+-  `--sister-penalty <off/lenient/strict>` penalize homologs of missing genes in sisters of LGT clades (or just recipient if known) [default: strict]
+-  `--clade-genes <1-N>`   required minimum genes assigned to each LGT clade [default: off]
+-  `--clade-leaves <1-N>`  required minimum leaf count supporting each LGT clade (or just recipient if known) [default: off]
 
 gene-hit merge parameters:
-  `--weak-loci <ignore/penalize/assign-unknown>` method for handling loci that are never assigned to known clades [default: ignore]
-  `--annotation-threshold <off/lenient/strict>`  stringency of gene annotation transfer to loci [default: lenient]
-  `--min-overlap <0.0-1.0>` only merge hits into genes if the longer of the two covers this portion of the shorter [default: 0.1]
-  `--min-gene-length <int>` minimum allowed gene length [default: 200]
-  `--min-scov <float>`    (modified) scoverage filter for hits to gene catalog [default: 0.75]
-  `--stranded `           only merge hits into hits/genes of the same strandedness [default: off]
+ - `--weak-loci <ignore/penalize/assign-unknown>` method for handling loci that are never assigned to known clades [default: ignore]
+ - `--annotation-threshold <off/lenient/strict>`  stringency of gene annotation transfer to loci [default: lenient]
+ - `--min-overlap <0.0-1.0>` only merge hits into genes if the longer of the two covers this portion of the shorter [default: 0.1]
+ - `--min-gene-length <int>` minimum allowed gene length [default: 200]
+ - `--min-scov <float>`    (modified) scoverage filter for hits to gene catalog [default: 0.75]
+ - `--stranded `           only merge hits into hits/genes of the same strandedness [default: off]
