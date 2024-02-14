@@ -138,3 +138,37 @@ gene-hit merge parameters:
  - `--min-gene-length <int>` minimum allowed gene length [default: 200]
  - `--min-scov <float>`    (modified) scoverage filter for hits to gene catalog [default: 0.75]
  - `--stranded `           only merge hits into hits/genes of the same strandedness [default: off]
+
+### Examining no-HGT contigs 
+
+Most contigs are assigned to the `no_lgt` bin. They sugget to inspect it with:
+
+```
+cut -f1,4-7 contigs.no_lgt.tsv | less
+```
+Other columns include taxonomy, contig length and melded.
+
+Example:
+```
+CONTIG_NAME  MIN_SCORE  AVG_SCORE  SYNTENY    CLADE
+14237        0.983      0.989      AAAA       s__Faecalibacterium_prausnitzii
+14258        0.950      0.994      AAAAAAAAA  s__Eubacterium_rectale
+```
+
+In the case of the first contig, 14237, these fields tell us that the contig was best explained by Faecalibacterium prausnitzii. The contig had four genes (evident from the AAAA synteny). F. prausnitzii had a minimum score over these genes of 0.983 (much greater than the threshold of 0.5), and its average score was similarly high at 0.989. We are very confident that this contig represents a fragment of F. prausnitzii genome.
+
+### Examining HGT contigs 
+These contigs are better explained by two clades, so they are putative LGT transfers. 
+
+```
+cut -f1,4-10 input_contigs.lgt.tsv
+```
+Other columns include taxonomy, contig length, melded, taxonomy, loci and uniprot annotation.
+
+Example:
+```
+CONTIG_NAME  MIN_MAX_SCORE  AVG_MAX_SCORE  SYNTENY       DIRECTION  CLADE_A                     CLADE_B                          LCA
+12571        0.856          0.965          AABAAAA       B>A        s__Ruminococcus_bromii      s__Faecalibacterium_prausnitzii  f__Ruminococcaceae
+```
+In the case of the first contig, 12571, these fields tell us that the contig was best explained by a putative LGT between Ruminococcus bromii and Faecalibacterium prausnitzii: two species that are related at the family level [according to the lowest common ancestor (LCA) field]. The synteny pattern AABAAAA suggests that a single F. prausnitzii gene (B) inserted into the R. bromii genome.
+The min-max score entry indicates that, across the seven loci of this contig, one of these species always scored at least 0.856 (this exceeded the default k2 value of 0.8, allowing the LGT to be called).
