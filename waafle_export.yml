@@ -32,3 +32,48 @@ dependencies:
   - libidn2=2.3.7=hd590300_0
   - libnsl=2.0.0=h5eee18b_0
   - libssh2=1.10.0=haa6b8db_3
+  - libstdcxx-ng=13.2.0=h7e041cc_5
+  - libunistring=0.9.10=h7f98852_0
+  - libxml2=2.10.4=hcbfbd50_0
+  - libzlib=1.2.13=hd590300_5
+  - lz4-c=1.9.4=h6a678d5_0
+  - ncurses=6.4=h6a678d5_0
+  - numpy=1.13.3=py36_blas_openblash1522bff_1201
+  - openblas=0.3.3=h9ac9557_1001
+  - openssl=1.1.1w=hd590300_0
+  - pcre=8.45=h9c3ff4c_0
+  - perl=5.26.2=h36c2ea0_1008
+  - perl-archive-tar=2.32=pl526_0
+  - perl-carp=1.38=pl526_3
+  - perl-common-sense=3.74=pl526_2
+  - perl-compress-raw-bzip2=2.087=pl526he1b5a44_0
+  - perl-compress-raw-zlib=2.087=pl526hc9558a2_0
+  - perl-exporter=5.72=pl526_1
+  - perl-exporter-tiny=1.002001=pl526_0
+  - perl-extutils-makemaker=7.36=pl526_1
+  - perl-io-compress=2.087=pl526he1b5a44_0
+  - perl-io-zlib=1.10=pl526_2
+  - perl-json=4.02=pl526_0
+  - perl-json-xs=2.34=pl526h6bb024c_3
+  - perl-list-moreutils=0.428=pl526_1
+  - perl-list-moreutils-xs=0.428=pl526_0
+  - perl-pathtools=3.75=pl526h14c3975_1
+  - perl-scalar-list-utils=1.52=pl526h516909a_0
+  - perl-types-serialiser=1.0=pl526_2
+  - perl-xsloader=0.24=pl526_0
+  - pip=21.3.1=pyhd8ed1ab_0
+  - python=3.6.15=hb7a2778_0_cpython
+  - python_abi=3.6=2_cp36m
+  - readline=8.2=h5eee18b_0
+  - setuptools=58.0.4=py36h5fab9bb_2
+  - sqlite=3.41.2=h5eee18b_0
+  - tbb=2021.9.0=hf52228f_0
+  - tk=8.6.12=h1ccaba5_0
+  - wget=1.20.3=ha56f1ee_1
+  - wheel=0.37.1=pyhd3eb1b0_0
+  - xz=5.4.5=h5eee18b_0
+  - zlib=1.2.13=hd590300_5
+  - zstd=1.5.5=hc292b87_0
+  - pip:
+      - waafle==1.0.0
+prefix: /users/genomics/gorsini/.conda/envs/waafle
