@@ -18,3 +18,4 @@ pip install ssw-py
 pip install Lumpy
 pip install gurobipy
 ```
+In the end I managed to create the environmet from a single yml file. It can be found in this repository
