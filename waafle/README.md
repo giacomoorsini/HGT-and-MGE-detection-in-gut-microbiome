@@ -8,6 +8,9 @@ The pipeline requires the issue of 3 different commands:
 - `waafle_search` used to search the input contigs against the WAAFLE-formatted database
 - `waafle_genecaller` to identify gene coordinates of interest directly from the BLAST output produced in the previous step 
 - `waafle_orgscorer` identify contigs derived from a single clade or pair of clades
+
+  ![image](https://github.com/giacomoorsini/HGT-tools/assets/133371083/24f66c8c-4487-41de-b17b-fda0898fdb76)
+
 ## waafle_search
 This script executes a custom BLAST search of a set of contigs against a WAAFLE-formatted database.
 
