@@ -4,7 +4,33 @@
 #you are supposed to have this script and all the scripts you will use for waafle in a directory called 
 # .../waafle/src  
 #you should also have in the /waafle/ directory a directory containing the waafle database and the taxonomy file.
-#this script doesn't provide for those
+#this script doesn't provide for those. This script optionally download in the current directory the waafle scripts from git
+
+if [ -f "./waafle.sh" ]; then
+    echo "waafle.sh already present"
+else
+    wget https://raw.githubusercontent.com/giacomoorsini/HGT-tools/main/waafle/src/waafle.sh
+fi
+if [ -f "./waafle_search.sh" ]; then
+    echo "waafle_search.sh already present"
+else
+    wget https://raw.githubusercontent.com/giacomoorsini/HGT-tools/main/waafle/src/waafle_search.sh
+fi
+if [ -f "./waafle_genecaller.sh" ]; then
+    echo "waafle_genecaller.sh already present"
+else
+    wget https://raw.githubusercontent.com/giacomoorsini/HGT-tools/main/waafle/src/waafle_genecaller.sh
+fi
+if [ -f "./waafle_orgscorer.sh" ]; then
+    echo "waafle_orgscorer.sh already present"
+else
+    wget https://raw.githubusercontent.com/giacomoorsini/HGT-tools/main/waafle/src/waafle_orgscorer.sh
+fi
+if [ -f "./flush.sh" ]; then
+    echo "flush.sh already present"
+else
+    wget https://raw.githubusercontent.com/giacomoorsini/HGT-tools/main/waafle/src/flush.sh
+fi
 
 if [ -d "../stdir" ]; then
     echo "stdir already exists"
