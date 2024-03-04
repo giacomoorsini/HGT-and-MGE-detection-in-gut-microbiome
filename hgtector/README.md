@@ -69,9 +69,43 @@ You may also do manual statistics on this table using your favorite tool and app
 ORFans are those proteins (genes) without any non-self hits. They should typically be removed from the statistical analysis. Outliers are not that deleterious in the default workflow. But they make the plot ugly; and they also potentially impact the subsequent analysis under certain settings. To be safe, let's remove them. 
 
 #### Group score clustering
-Here is the core step of the entire workflow. HGTector attempts to separate the distribution of scores of each group into at least two clusters, and considers the cluster at the low end as "atypical". Genes falling within the atypical cluster are those with fewer and less similar hits in the corresponding group
+Here is the core step of the entire workflow. HGTector attempts to separate the distribution of scores of each group into at least two clusters, and considers the cluster at the low end as "atypical". Genes falling within the atypical cluster are those with fewer and less similar hits in the corresponding group.
 
+This is actually a question of 1D data clustering, with certain assumption on the direction and location of the target cluster. The original HGTector used kernel density estimation (KDE) to solve this question. HGTector2 adopts this strategy for consistency, and adds a few functions to make this process more robust and automatic.
 
+The most important and tricky parameter in KDE is the bandwidth of the kernel. It is positively correlated with the smoothness of the density function. An overly large bandwidth (too smooth) may cloak the desired cluster, whereas an overly small bandwidth (too sharp) may divide the data into too many clusters.
 
+Several methods are available for calculating the bandwidth (specified by the option --bandwidth). The default method, auto, is a new algorithm implemented in HGTector2, which sequentially tests available bandwidths from high to low in a log space, and stops when the atypical cluster just starts to separate from the rest of data points.
 
+The second option, grid, performs grid search with cross validation to optimize the bandwidth. This is a modern approach favored in the machine learning community.
 
+The third option, silverman uses Silverman's rule-of-thumb to quickly determine the best bandwidth. This is a traditional statistical approach.
+
+Works both for close and distal groups. Anyway, the program still attempts to find a cluster and to determine a threshold. But it could fail if the distribution is too smooth. In such case, the program will use an arbitrarily defined cutoff (default: 1st quartile) (controlled by --fixed). This is usually okay for the "distal" group, but not that so for the "close" group.
+
+#### Initial prediction
+Based on the clustering of "close" and "distal" scores, the program isolates a window of data points (genes) that are susceptible to HGT. The criteria are:
+
+"Close" score is in the lower cluster, i.e., the vertical evolutionary history of this gene is atypically underrepresented than the rest of the genome.
+"Distal" score is NOT in the lower cluster, i.e., the gene has trackable evidence of evolutionary connection with some distant taxonomic groups.
+Taken together, they indicate a plausible explanation of the evolution of this gene: horizontal gene transfer (HGT).
+
+"Self" group
+Optionally, one can designate a third criterion:
+
+"Self" score is also in the lower cluster (atypical).
+This additional criterion is only relevant when there are multiple closely related input genomes, and the biological assumption is that HGT took place in some particular lineage(s), so that the rest of the "self" group do not possess the gene. The criterion can be enabled using the flag --self-low.
+
+#### Final output
+The refined list of putatively HGT-derived genes is printed to a .txt file. This file also reports the silhouette score and the potential donor of each candidate gene.
+The silhouette score is reported because users may want to report some statistical measurements of individual prediction results. But it is important not to over-interpret the silhouette scores. They are NOT likelihoods of genes being horizontally derived. They are measurements of how well particular candidate genes are clustered with other candidate genes.
+
+Therefore, if multiple genes got horizontally transferred in a bulk, i.e., a "genomic island", there is higher chance for them to cluster tightly, and high silhouette scores are expected. In contrast, individual HGT-derived genes may be located far from the cluster core (hence moderate silhouette scores), but in the right direction (low close, high distal), and that is still a strong implication of HGT.
+
+The potential donor is defined as the lowest common ancestor (LCA) of the top hits in the "distal" group. By default, hits with a bit score within 10% less than the best hit are considered as "top hits". This threshold is consistent with to DIAMOND's taxonomic classification function, and one can customize it using the --distal-top parameter.
+
+The resulting TaxID (or "0" if not found) is appended to the score table under column "match", as well as to the predicted HGT list as the last column (in which case it is considered as the potential donor in this HGT event).
+
+One can let the potential donors be reported by their taxon names instead of TaxIDs suing the --donor-name flag.
+
+One can force the potential donors to be reported at a certain rank using the --donor-rank parameter (e.g., "genus"). Donors below this rank will be raised to this rank (e.g., "E. coli" becomes "Escherichia"), however donors above this rank will be discarded. Since it is not uncommon that the true donor cannot be accurately determined using the taxonomy of extant organisms, we recommend not using this parameter, or setting it to a high rank (e.g., "phylum").
