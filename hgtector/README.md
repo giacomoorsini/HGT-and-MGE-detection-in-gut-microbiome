@@ -5,7 +5,11 @@ Download the yml file and create the environment with conda
 ## Tutorial
 HGTector can work out-of-the-box. the program does not need a sequence aligner, or a local sequence database, or a taxonomy system, or any super computing hardware. 
 It will take care of everything by calling a remote server (by default the NCBI BLAST server). 
-It does not even need input data --- as long as you provide a list of sequence IDs which can be looked up from the remote database. Obviously it is not ment to be used like this.
+It does not even need input data --- as long as you provide a list of sequence IDs which can be looked up from the remote database. Obviously it is not ment to be used like this but it is possible.
+The pipeline works in two step:
+- search: homolgy search between input data and a database.
+- analyze: analyze the results and predict HGT
+You need to provide a database to the pipeline.
 
 ### Aligner
 HGTector should ideally work with a local database and a local program for sequence homology search. This is to ensure fast, controllable and repeatable bioinformatic analyses.
