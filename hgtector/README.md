@@ -32,14 +32,32 @@ each of which represents the complete protein set of a genome, or a bin from a m
 bacteria from the NCBI server.
 
 ### Search 
-Perform batch homology search of the protein sequences against the database. For both BLAST and DIAMOND, the output hit table format is: qaccver saccver pident evalue bitscore qcovhsp staxids
+The search command performs batch homology searching on input protein sequences against a reference sequence database, and filters hits based on alignment metrics and taxonomic information. You can search remotely (the command will communicate with the NCBI server) or locally. In the latter case, two common aligners are supported: DIAMOND and Blastp. For both BLAST and DIAMOND, the output hit table format is: `qaccver saccver pident evalue bitscore qcovhsp staxids`. 
+```
+hgtector search -i sample.faa.gz -o . -m diamond -p 32 -d <diamond_db> -t <taxdump_dir>
+```
 
 Three common alignment metrics are present: E-value, % identity, and % coverage of query. You can specify thresholds for them, as well as multiple other metrics, in the search command.
-
 Meanwhile, HGTector performs self-alignment for each input protein sequence to get a bit score, and appends it to the comment lines above each hit table. This score will serve as the baseline for hit score normalization.
 
+One output file, `sample.tsv` is created for each sample to host basic properties and hit table for each protein. The header section contains the following keys: `ID, Length, Product, Score, Hits`
+
+
+There are many more informations, visit the page https://github.com/qiyunlab/HGTector/blob/master/doc/search.md
+
 ### Analyze
-With the search results you can proceed to predict HGTs using the analyze command. You may also provide multiple samples for a combined analysis.
+The analyze command predicts HGT-derived genes based on the distribution of the patterns of sequence homology search results of all proteins (genes) in one or more samples (genomes). Several statistical approaches are involved in this workflow.
+```
+hgtector analyze -i sample.tsv -o <output_dir> <parameters...>
+```
+
+Outputs are: 
+- scores.tsv	A single multi-Fasta file containing all protein sequences.
+- hgts/<sample>.txt	Predicted HGT-derived genes and their silhouette scores.
+- <group>.hist.png	Histogram of scores of a group.
+- <group>.kde.png	Density function of scores of a group, and clustering threshold (grey line).
+- scatter.png	Scatter plot of distal vs. close scores. Each point represents a gene (protein).
+- To see all the parameters visit: https://github.com/qiyunlab/HGTector/blob/master/doc/analyze.md
 
 #### Hit filtering 
 The analyze command also has search threshold parameters such as --maxhits, --evalue, --identity and --coverage. Their meanings are the same as those in the search command. That's because these values can notably impact the prediction result (which is conceivable since they matter how "homology" is defined), and when you feel the need for tuning those parameters, 
