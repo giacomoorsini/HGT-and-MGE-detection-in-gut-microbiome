@@ -1,8 +1,14 @@
 # WAAFLE TUTORIAL
 This is a brief tutorial to use waafle. All information are taken from the waafle github repository https://github.com/biobakery/waafle/tree/main. 
 ## How to install
-To install the tool, we made a conda enviroment which contain all the dependencies to make it work. The YAML file can be found in waafle.yml. You will just have to issue the command:
+To install the tool, we made a conda enviroment which contain all the dependencies to make it work. The YAML file can be found in waafle.yml. Once you download the file, you will just have to issue the command:
 `conda env create -f waafle.yml`
+
+For the rest of the installation, you can dowload the file `src/terraform.sh` and place it in a directory structure of type `waafle/src/terraform.sh`. Read carefully the script before issuing it as it creates default directories.
+```
+bash terraform.sh
+```
+
 ## How to use the tool
 The pipeline requires the issue of 3 different commands: 
 - `waafle_search` used to search the input contigs against the WAAFLE-formatted database
