@@ -20,6 +20,12 @@ A reference protein sequence database should ideally contain a significant bread
 HGTector provides an automated workflow, database, for downloading non-redundant protein sequences from the NCBI server and compiling them into a DIAMOND or BLASTp database.
 (https://github.com/qiyunlab/HGTector/blob/master/doc/database.md)
 
+to construct a datbase:
+```
+hgtector database -o db_dir --default
+```
+This will download all protein sequences of NCBI RefSeq genomes of bacteria, archaea, fungi and protozoa, keep one genome per species that has a Latinate name, plus one genome per taxonomic group at higher ranks, regardless whether that genome has a Latinate species name, plus all NCBI-defined reference, representative and type material genomes (prioritized during taxonomy-based sampling, and added afterwards if not sampled).
+
 ### Input data
 The input data for HGTector should be one or more multi-Fasta files,
 each of which represents the complete protein set of a genome, or a bin from a metagenome assembly, or any collection that you consider as an independent evolutionary unit. For testing, you can dowload  the whole protein set of a 
