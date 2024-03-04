@@ -27,7 +27,8 @@ else
       num_files=$(ls $SPLITDIR | wc -l)
       echo "Done: $num_files split files created"
    else
-      echo "Error: wrong command or path. Aborting."
+      echo "Error: wrong command or path. Removing splitdir. Aborting."
+      rmdir $SPLITDIR
       exit 1
    fi
 fi
