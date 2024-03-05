@@ -13,9 +13,18 @@ conda install scikit-learn
 conda install numpy
 conda install scipy
 conda install -c conda-forge lmfit
+conda install git
 pip install pysam
 pip install ssw-py
 pip install Lumpy
 pip install gurobipy
 ```
-In the end I managed to create the environmet from a single yml file. It can be found in this repository
+In the end I managed to create the environmet from a single yml file. It can be found in this repository `lemon.yml`
+To install lemon, you need to download the git repository. Just follow the command reported in the lemon installation page:
+
+```
+git clone --recursive https://github.com/lichen2018/hgt-detection.git
+cd getAccBkp
+make
+export CPLUS_INCLUDE_PATH=/home/your_home_path/lib/htslib-1.9
+```
