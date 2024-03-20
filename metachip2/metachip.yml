@@ -1,0 +1,24 @@
+name: metachip
+channels:
+  - bioconda
+  - conda-forge
+  - defaults
+dependencies:
+  - conda-forge::r-base=4.3.2
+  - scipy
+  - numpy
+  - bioconda::blast 
+  - bioconda::diamond 
+  - bioconda::mmseqs2 
+  - bioconda::mafft 
+  - bioconda::hmmer
+  - bioconda::fasttree
+  - conda-forge::biopython
+  - conda-forge::matplotlib
+  - etetoolkit::ete3
+  - conda-forge::r-optparse 
+  - conda-forge::r-ape 
+  - conda-forge::r-circlize
+  - pip
+  - pip:
+      - metachip==1.10.13
