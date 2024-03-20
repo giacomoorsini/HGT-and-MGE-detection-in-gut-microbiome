@@ -52,6 +52,11 @@ if [ -f "./flush.sh" ]; then
 else
     wget https://raw.githubusercontent.com/giacomoorsini/HGT-tools/main/waafle/src/flush.sh
 fi
+if [ -f "./config.sh" ]; then
+    echo "flush.sh already present"
+else
+    wget https://raw.githubusercontent.com/giacomoorsini/HGT-tools/main/waafle/src/config.sh
+fi
 
 #CHECK AND DOWLOAD WAAFLE DATABASES
 # if [ -d "../waafledb" ]; then
