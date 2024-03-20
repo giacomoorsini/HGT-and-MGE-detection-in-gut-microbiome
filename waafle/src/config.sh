@@ -10,6 +10,7 @@ TAXONOMY=$MAINDIR"/tools/HGT/waafle/waafledb_taxonomy.tsv"
 
 #INPUT PATH
 INPUTFILE=$DATADIR"/final.contigs.fa"
+lines_per_split=10000
 
 #TOOL PATH
 TOOL=$MAINDIR"/tools/HGT/waafle"
