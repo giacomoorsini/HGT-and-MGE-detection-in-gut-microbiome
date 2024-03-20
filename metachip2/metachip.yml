@@ -13,6 +13,7 @@ dependencies:
   - bioconda::mafft 
   - bioconda::hmmer
   - bioconda::fasttree
+  - bioconda::prodigal
   - conda-forge::biopython
   - conda-forge::matplotlib
   - etetoolkit::ete3
