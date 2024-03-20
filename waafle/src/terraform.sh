@@ -58,7 +58,7 @@ fi
 #     echo "waafle database already present"
 # else
 #     echo "Download waafle database"
-#     wget https://raw.githubusercontent.com/giacomoorsini/HGT-tools/main/waafle/src/flush.sh -P ../ 
+#     wget http://huttenhower.sph.harvard.edu/waafle_data/waafledb.tar.gz -P ../ 
 # fi
 # if [ -f "../waafledb_taxonomy.tsv" ]; then
 #     echo "waafle taxonomy already present"
