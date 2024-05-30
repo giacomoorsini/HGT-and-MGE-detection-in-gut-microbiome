@@ -1,38 +1,26 @@
 #!/bin/bash
 
+DATASET="CM_tanzania2"
+QUEUE="common_cpuQ"
+
 #MAIN PATH
-MAINDIR="/users/genomics/gorsini"
+HOMEDIR="/shares/CIBIO-Storage/CM/scratch/users/giacomo.orsini/waafle/src"
+OUTDIR="/shares/CIBIO-Storage/CM/scratch/users/giacomo.orsini/waafle/benchmarking_set"
 
 #DATA PATH
-DATADIR=$MAINDIR"/giacomoAssembled/assembled_C16-20082-TZ"  
-DBDIR=$MAINDIR"/tools/HGT/waafle/waafledb/waafledb"
-TAXONOMY=$MAINDIR"/tools/HGT/waafle/waafledb_taxonomy.tsv"
+DATADIR="/shares/CIBIO-Storage/CM/scratch/users/giacomo.orsini/waafle/benchmarking_set/data"
+DB="/shares/CIBIO-Storage/CM/scratch/users/claudia.mengoni/HGT_mireia/waffle/u90_CM_ghanatanzania_animals.blastdb"
+TAX="/shares/CIBIO-Storage/CM/scratch/users/claudia.mengoni/HGT_mireia/waffle/tax_info.tsv"
 
 #INPUT PATH
-INPUTFILE=$DATADIR"/final.contigs.fa"
-lines_per_split=10000
-
-#TOOL PATH
-TOOL=$MAINDIR"/tools/HGT/waafle"
+TMP=$OUTDIR"/data"
+META=$OUTDIR"/meta"
 
 #SCRIPT AND OUPUT PATH
-SRCDIR=$TOOL"/src"
-STDDIR=$TOOL"/stdir"
+SRCDIR=$HOMEDIR"/src"
+STDDIR=$OUTDIR"/stdir"
 
 #STEP PATH
 SEARCH=$STDDIR"/search"
 GENECALL=$STDDIR"/genecall"
-ORGOSCORE=$STDDIR"/orgscore"
-
-#ERROR AND OUTPUT PATH
-SEARCHOUT=$SEARCH"/out"
-SEARCHERR=$SEARCH"/err"
-SEARCHFINAL=$SEARCH"/final_out"
-
-GCALLOUT=$GENECALL"/out"
-GCALLERR=$GENECALL"/err"
-GCALLFINAL=$GENECALL"/final_out"
-
-OSCOROUT=$ORGOSCORE"/out"
-OSCORERR=$ORGOSCORE"/err"
-OSCORFINAL=$ORGOSCORE"/final_out"
+ORGSCORE=$OUTDIR"/orgscore""
