@@ -4,103 +4,109 @@
 #PBS -l select=1:ncpus=1:mem=5gb
 #PBS -l walltime=06:00:00
 #PBS -q CIBIO_cpuQ
-#PBS -o "/shares/CIBIO-Storage/CM/scratch/users/giacomo.orsini/waafle/CM_ghanatanzania_animals/stdir/manager.out"
-#PBS -e "/shares/CIBIO-Storage/CM/scratch/users/giacomo.orsini/waafle/CM_ghanatanzania_animals/stdir/manager.err"
+#PBS -o "/shares/CIBIO-Storage/CM/scratch/users/giacomo.orsini/waafle/CM_ghana/stdir/manager.out"
+#PBS -e "/shares/CIBIO-Storage/CM/scratch/users/giacomo.orsini/waafle/CM_ghana/stdir/manager.err"
 
 # Import paths from config file
-source /home/giacomo.orsini-1/waafle/test_anal/src/config.sh
+source /shares/CIBIO-Storage/CM/scratch/users/giacomo.orsini/waafle/CM_ghana/src/config.sh
 
 # Checkpoint
 if [ -f "$META/${DATASET}_list.txt" ]; then
-        echo "List of file exists, activating the script..."
+        echo "List of files exists, activating the script..."
         echo -e "Going trough list...\n"
 else
         echo "Unable to locate the list of files. Aborting."
         exit 1
 fi
 
-# Go trough all the lines of the list
+# Go through all the lines of the list
 while IFS= read -r line; do
 
-        # Compute file path
-        FILE=$DATADIR/$line
+        # Specify file path with or without directory prefix
+        if [[ "$line" == */* ]]; then
+                # If the path includes a directory (directory/file.suffix.bz2)
+                SAMPLE=$(echo "$line" | awk -F "/" '{print $2}' | awk -F "$SUFFIX" '{print $1}')
+                FILE="$CONTIGSDIR/$line"
+        else
+                # If the path does not include a directory (file.suffix.bz2)
+                SAMPLE=$(echo "$line" | awk -F "$SUFFIX" '{print $1}')
+                FILE="$CONTIGSDIR/$line"
+        fi
 
-        # Extract sample name
-        SAMPLE=$(echo "$line" | awk -F "_" '{print $1}')
-        JOBID=$(echo "$SAMPLE" | cut -d "-" -f 2,3 | cut -d "_" -f 1)
-        UNZPFILE=$(echo "$line" | awk -F "." '{print $1"."$2}')
+        # Extract job id (NNNNN-TZ)
+        JOBID=$(echo "$SAMPLE" | awk -F "-" '{print $2"-"$3}')
+        UNZPFILE="${SAMPLE}${SUFFIX}"
 
         # Checkpoint
         if [ $? -eq 0 ]; then
                 echo "Analyzing sample: $SAMPLE"
         else
-                echo "Failed to retrieve the sample name from list. Check $META/${list}. Aborting"
+                echo "Failed to retrieve the sample name from the list. Check $META/${DATASET}_list.txt. Aborting"
                 exit 1
         fi
 
         # Checkpoint
         if [ -f "$TMP/$UNZPFILE" ]; then
-                echo -e "\tContigs are already present in temporary directory, proceeding..."
-        fi
+                echo -e "\t Contigs are already present in the temporary directory, proceeding..."
 
-        if [ -f "$TMP/$FILE" ]; then
-                echo -e "\tContigs are already present in temporary directory, proceeding..."
         else
-                echo -e "\t Retrieving the contigs..."
 
-                # Copy file
-                cp $FILE $TMP
+                if [ -f "$TMP/${UNZPFILE}.bz2" ]; then
+                        echo -e "\t Zipped contigs are already present in the temporary directory, proceeding..."
 
-                # Checkpoint
-                if [ $? -eq 1 ]; then
-                        echo -e "\t Unable to copy file into directory. Aborting."
-                        exit 1
+                        # Unzip file
+                        bzip2 -d $TMP/${UNZPFILE}.bz2
+
+                        # Checkpoint
+                        if [ $? -eq 1 ]; then
+                                echo -e "\t Unable to unzip the file in the directory. Aborting."
+                                exit 1
+                        fi
+
+                        echo -e "\t File unzipped correctly, proceeding..."
+                else
+                        echo -e "\t Retrieving the contigs..."
+
+                        # Copy file
+                        cp $FILE $TMP
+
+                        # Checkpoint
+                        if [ $? -eq 1 ]; then
+                                echo -e "\t Unable to copy file into directory. Aborting."
+                                exit 1
+                        fi
+
+                        # Unzip file
+                        bzip2 -d $TMP/${UNZPFILE}.bz2
+
+                        # Checkpoint
+                        if [ $? -eq 1 ]; then
+                                echo -e "\t Unable to unzip the file in the directory. Aborting."
+                                exit 1
+                        fi
+
+                        echo -e "\t File copied and unzipped correctly, proceeding..."
                 fi
-
-                # Unzip file
-                bzip2 -d $TMP/$line
-
-                # Checkpoint
-                if [ $? -eq 1 ]; then
-                        echo -e "\t Unable to unzip file in directory. Aborting."
-                        exit 1
-                fi
-
-                echo -e "\t File copied and unizpped correctly, proceeding..."
         fi
-
-        #echo -e "\t\t Checking queue status..."
-
-        #while true; do
-        #
-        #       queue_jobs=$(qstat $QUEUE | grep -c " Q ")
-        #       if [ $queue_jobs -gt 30 ]; then
-        #               echo -e "\t\t Number of jobs in $QUEUE queue is greater than 30. Sleeping for 2 minutes..."
-        #               sleep 120
-        #       else
-        #               echo -e "\t\t Queue is free."
-        #               break
-        #       fi
-        #done
-
-        #if [ $? -eq 1 ]; then
-        #       echo -e "\t\t Unable to check queue status."
-        #fi
 
         # Send waafle pipeline to the cluster
         echo -e "\t\t Sending job to cluster..."
-        qsub -N $JOBID -o $STDDIR/waafle_${JOBID}.out -e $STDDIR/waafle_${JOBID}.err -q $QUEUE $SRCDIR/waafle_run.sh
-
+        qsub -N $JOBID -o $STDDIR/waafle_complete${JOBID}.out -e $STDDIR/waafle_complete${JOBID}.err -q $QUEUE $SRCDIR/waafle_complete_run.sh
         # Checkpoint
         if [ $? -eq 1 ]; then
-                echo -e "\t\t Unable to send job to the cluster. Aborting."
+                echo -e "\t\t Unable to send the job to the cluster. Aborting."
                 exit 1
         else
-                echo -e "\t\t Job sent."
+                echo -e "\t\t Job sent.\n"
         fi
-
+        
         sleep 2
 
 done < $META/${DATASET}_list.txt
 
-echo -e "\n Finished succesfully."
+if [ $? -ne 0 ]; then
+        echo -e "Something went wrong when reading the list, aborting"
+        exit 1
+else
+        echo -e "Finished!\n"
+fi
