@@ -36,10 +36,5 @@ This script simply issues all the waafle commands in order on the input data. Th
 #### Check if all samples were analyzed correctly with `check_recover.sh`
 This optional script checks if some files in the temporary data directory (the initial input contigs file) have not been eliminated. There is a high probability that these files were not analyzed correctly. It tells you which samples had this problem so you can further check the error log, and it automatically tries to send the jobs to the cluster again.
 
-### Version 1
-The scripts work when the directory holding the files is in the form directory-directory-files
-- `config.sh`: stores all the paths
-- `get_list_r.sh`: this script takes as input a text file storing the path to the contigs. It outputs a list of all the contigs file that will then be used in the analysis
-- `manager_r.sh`: this script goes trough the list created by the previous command and calls the full waafle pipeline on the sample
-- `waafle_run_r.sh`: this script calls all the waafle commands and performs a full analysis
-- `check_recover.sh`: this script checks if some samples were not analyzed
+## Second version scripts
+The scripts in this folder are simply the same scripts with some simple tweaking as I had to deal with data in different storing structures (such as different extensions and different directories structures)
