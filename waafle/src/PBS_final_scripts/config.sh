@@ -1,26 +1,31 @@
 #!/bin/bash
 
-DATASET="CM_tanzania2"
-QUEUE="common_cpuQ"
+#MAIN VARIABLES
+DATASET="CM_ghana"
+QUEUE="CIBIO_cpuQ"
+SUFFIX=".spades.fasta"  #without zip extension
 
-#MAIN PATH
-HOMEDIR="/shares/CIBIO-Storage/CM/scratch/users/giacomo.orsini/waafle/src"
-OUTDIR="/shares/CIBIO-Storage/CM/scratch/users/giacomo.orsini/waafle/benchmarking_set"
+#HOME DIRECTORY PATH
+HOMEDIR="/shares/CIBIO-Storage/CM/scratch/users/giacomo.orsini/waafle/${DATASET}"
 
-#DATA PATH
-DATADIR="/shares/CIBIO-Storage/CM/scratch/users/giacomo.orsini/waafle/benchmarking_set/data"
+#INPUT DATA PATHS
+DATADIR="/shares/CIBIO-Storage/CM/scratch/data/meta/${DATASET}"
+CONTIGSDIR="${DATADIR}/contigs"
+READSDIR="${DATADIR}/reads"
+TMP=$HOMEDIR"/data"
+META=$HOMEDIR"/meta"
+
+#WAAFLE DB AND TAX FILE PATHS
 DB="/shares/CIBIO-Storage/CM/scratch/users/claudia.mengoni/HGT_mireia/waffle/u90_CM_ghanatanzania_animals.blastdb"
-TAX="/shares/CIBIO-Storage/CM/scratch/users/claudia.mengoni/HGT_mireia/waffle/tax_info.tsv"
+TAX="/home/giacomo.orsini-1/waafle/taxonomy/waafle_tax_ordered_straincode_groupedSGB.tsv"
 
-#INPUT PATH
-TMP=$OUTDIR"/data"
-META=$OUTDIR"/meta"
-
-#SCRIPT AND OUPUT PATH
+#SCRIPTS AND ERROR LOGS DIRECTORIES PATHS
 SRCDIR=$HOMEDIR"/src"
-STDDIR=$OUTDIR"/stdir"
+STDDIR=$HOMEDIR"/stdir"
 
-#STEP PATH
+#OUTPUT DIRECTORIES PATHS
 SEARCH=$STDDIR"/search"
 GENECALL=$STDDIR"/genecall"
-ORGSCORE=$OUTDIR"/orgscore""
+ORGSCORE=$HOMEDIR"/orgscore"
+JUNCTIONS=$STDDIR"/junctions"
+QC=$ORGSCORE"/qc"
