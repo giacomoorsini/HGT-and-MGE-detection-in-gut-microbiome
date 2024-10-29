@@ -18,7 +18,7 @@ Briefly, WAAFLE works by blasting the input contigs against a gene database, giv
 
 In practice, the pipeline requires 2 mandatory commands and 3 optional ones
 
-### Homology search: `waafle_search`
+### 1) Homology search: `waafle_search`
 This script executes a custom BLAST search of a set of contigs against a WAAFLE-formatted database.
 
 ```
@@ -27,7 +27,7 @@ waafle_search input.fna path/waafledb
 
 This command produces an output file `contigs.blastout`. The output columns match the requested columns from the BLAST command. 
 
-### Gene calling: `waafle_genecaller` (OPTIONAL)
+### 2) Gene calling: `waafle_genecaller` (OPTIONAL)
 You can provide your own gene coordinates (GFF file). OPTIONALLY, WAAFLE can find the ORF from the BLAST output itself:
 
 ```
@@ -35,7 +35,7 @@ waafle_genecaller input_contigs.blastout
 ```
 This produced a file in GFF format. The most important columns in the output file are 1, 4, and 5: they provide an index of the gene start and stop coordinates within each contig.
 
-### Predict HGT events: `waafle_orgscorer`
+### 3) Predict HGT events: `waafle_orgscorer`
 It compares per-species BLAST hits with the contig's gene coordinates to try to find one- and two-species explanations for contigs. It also requires input contigs and the taxonomy file. 
 
 ```
@@ -47,13 +47,13 @@ This produces three output files:
 - `contigs.no_lgt.tsv` contains descriptions of contigs explained by single species/clades.
 - `contigs.unclassified.tsv` contains descriptions of contigs that could not be explained by either single species or pairs of species.
 
-### Find genes junctions: `waafle_junctions` (OPTIONAL)
+### 4) Find genes junctions: `waafle_junctions` (OPTIONAL)
 This is the first of a 2 step optional quality control check that removes low-quality predictions (potential false positives). To perform this step, you need reads data. This command maps the reads to contigs and quantifies support for individual gene-gene junctions. It uses bowtie2 and outputs a SAM file.
 ```
 waafle_junctions contigs.fna contigs.gff --reads1 contigs_reads.1.fq reads2 contigs_reads.2.fq
 ```
 
-### Remove low-quality reads: `waafle_qc` (OPTIONAL)
+### 5) Remove low-quality reads: `waafle_qc` (OPTIONAL)
 It uses the `waafle_junctions` output to remove contigs with weak read support at one or more junctions.
 ```
 waafle_qc contigs.lgt.tsv contigs.junctions.tsv
