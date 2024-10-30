@@ -2,9 +2,9 @@
 
 #this script contains the instruction to create a set of directory to make the custom waafle scripts work.
 #you are supposed to have this script and all the scripts you will use for waafle in a directory called 
-# .../waafle/src. You should also have in the /waafle/ directory a directory containing the waafle database and the taxonomy file.
+# .../waafle/src. You should also have a directory containing the waafle database and the taxonomy file.
 #this script optionally provides for those, the dowload of these files may be slow so check carefully the script.
-#This script download in the current directory all the waafle scripts from git.
+#This script downloads in the current directory all the waafle scripts from git.
 
 #CHECK AND CREATE SRC DIRECTORY
 dir="src"
@@ -27,35 +27,30 @@ else
 fi
 
 #CHECK AND DOWLOAD ALL THE CUSTOM SCRIPTS
-if [ -f "./waafle.sh" ]; then
-    echo "waafle.sh already present"
+if [ -f "./waafle_complete_run.sh" ]; then
+    echo "waafle_complete_run.sh already present"
 else
-    wget https://raw.githubusercontent.com/giacomoorsini/HGT-tools/main/waafle/src/waafle.sh
+    wget https://raw.githubusercontent.com/giacomoorsini/HGT-tools/refs/heads/main/waafle/src/PBS_final_scripts/waafle_complete_run.sh
 fi
-if [ -f "./waafle_search.sh" ]; then
-    echo "waafle_search.sh already present"
+if [ -f "./manager.sh" ]; then
+    echo "manager.sh already present"
 else
-    wget https://raw.githubusercontent.com/giacomoorsini/HGT-tools/main/waafle/src/waafle_search.sh
+    wget https://raw.githubusercontent.com/giacomoorsini/HGT-tools/refs/heads/main/waafle/src/PBS_final_scripts/manager.sh
 fi
-if [ -f "./waafle_genecaller.sh" ]; then
-    echo "waafle_genecaller.sh already present"
+if [ -f "./get_list.sh" ]; then
+    echo "get_list.sh already present"
 else
-    wget https://raw.githubusercontent.com/giacomoorsini/HGT-tools/main/waafle/src/waafle_genecaller.sh
+    wget https://raw.githubusercontent.com/giacomoorsini/HGT-tools/refs/heads/main/waafle/src/PBS_final_scripts/get_list.sh
 fi
-if [ -f "./waafle_orgscorer.sh" ]; then
-    echo "waafle_orgscorer.sh already present"
+if [ -f "./check_recover.sh" ]; then
+    echo "check_recover.sh already present"
 else
-    wget https://raw.githubusercontent.com/giacomoorsini/HGT-tools/main/waafle/src/waafle_orgscorer.sh
-fi
-if [ -f "./flush.sh" ]; then
-    echo "flush.sh already present"
-else
-    wget https://raw.githubusercontent.com/giacomoorsini/HGT-tools/main/waafle/src/flush.sh
+    wget https://raw.githubusercontent.com/giacomoorsini/HGT-tools/refs/heads/main/waafle/src/PBS_final_scripts/check_recover.sh
 fi
 if [ -f "./config.sh" ]; then
-    echo "flush.sh already present"
+    echo "config.sh already present"
 else
-    wget https://raw.githubusercontent.com/giacomoorsini/HGT-tools/main/waafle/src/config.sh
+    wget https://raw.githubusercontent.com/giacomoorsini/HGT-tools/refs/heads/main/waafle/src/PBS_final_scripts/config.sh
 fi
 
 #CHECK AND DOWLOAD WAAFLE DATABASES
@@ -82,84 +77,46 @@ else
 fi
 if [ -d "../stdir/search" ]; then
     echo "search directory already exists"
-    if [ -d "../stdir/search/out" ]; then
-        echo "search/out subdirectory already exists"
-    else
-        mkdir "../stdir/search/out"
-        echo "out subdirectory created"
-    fi
-    if [ -d "../stdir/search/err" ]; then
-        echo "search/err subdirectory already exists"
-    else
-        mkdir "../stdir/search/err"
-        echo "err subdirectory created"
-    fi
-    if [ -d "../stdir/search/final_out" ]; then
-        echo "search/final_out subdirectory already exists"
-    else
-        mkdir "../stdir/search/final_out"
-        echo "final_out subdirectory created"
-    fi
 else
     mkdir "../stdir/search"
-    mkdir "../stdir/search/out"
-    mkdir "../stdir/search/err"
-    mkdir "../stdir/search/final_out"
-    echo "search directory and subdirectories out, err, final_out created"
+    echo "search directory created"
 fi
-
 if [ -d "../stdir/genecall" ]; then
     echo "genecall directory already exists"
-    if [ -d "../stdir/genecall/out" ]; then
-        echo "genecall/out subdirectory already exists"
-    else
-        mkdir "../stdir/genecall/out"
-        echo "out subdirectory created"
-    fi
-    if [ -d "../stdir/genecall/err" ]; then
-        echo "genecall/err subdirectory already exists"
-    else
-        mkdir "../stdir/genecall/err"
-        echo "err subdirectory created"
-    fi
-    if [ -d "../stdir/genecall/final_out" ]; then
-        echo "genecall/final_out subdirectory already exists"
-    else
-        mkdir "../stdir/genecall/final_out"
-        echo "final_out subdirectory created"
-    fi
 else
     mkdir "../stdir/genecall"
-    mkdir "../stdir/genecall/out"
-    mkdir "../stdir/genecall/err"
-    mkdir "../stdir/genecall/final_out"
-    echo "genecall directory and subdirectories out, err, final_out created"
+    echo "genecall directory created"
+fi
+if [ -d "../stdir/junctions" ]; then
+    echo "junctions directory already exists"
+else
+    mkdir "../stdir/junctions"
+    echo "junctions directory created"
 fi
 
-if [ -d "../stdir/orgscore" ]; then
-    echo "orgscore directory already exists"
-    if [ -d "../stdir/orgscore/out" ]; then
-        echo "orgscore/out subdirectory already exists"
-    else
-        mkdir "../stdir/orgscore/out"
-        echo "out subdirectory created"
-    fi
-    if [ -d "../stdir/orgscore/err" ]; then
-        echo "orgscore/err subdirectory already exists"
-    else
-        mkdir "../stdir/orgscore/err"
-        echo "err subdirectory created"
-    fi
-    if [ -d "../stdir/orgscore/final_out" ]; then
-        echo "orgscore/final_out subdirectory already exists"
-    else
-        mkdir "../stdir/orgscore/final_out"
-        echo "final_out subdirectory created"
-    fi
+if [ -d "../meta" ]; then
+    echo "meta directory already exists"
 else
-    mkdir "../stdir/orgscore"
-    mkdir "../stdir/orgscore/out"
-    mkdir "../stdir/orgscore/err"
-    mkdir "../stdir/orgscore/final_out"
-    echo "orgscore directory and subdirectories out, err, final_out created"
+    mkdir "../meta"
+    echo "meta directory created"
+fi
+
+if [ -d "../data" ]; then
+    echo "data directory already exists"
+else
+    mkdir "../meta"
+    echo "data directory created"
+fi
+
+if [ -d "../orgscore" ]; then
+    echo "orgscore directory already exists"
+else
+    mkdir "../orgscore"
+    echo "orgscore directory created"
+fi
+if [ -d "../orgscore/qc" ]; then
+    echo "qc directory already exists"
+else
+    mkdir "../orgscore/qc"
+    echo "qc directory created"
 fi
