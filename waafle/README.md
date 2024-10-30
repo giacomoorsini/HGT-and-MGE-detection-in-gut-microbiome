@@ -5,13 +5,22 @@ This is a brief tutorial on how to use the WAAFLE (a Workflow to Annotate Assemb
 The WAAFLE GitHub page provides clear instructions on how to install the tool and the required dependencies. However, if you plan to use Conda to install it, you can use the following scripts. 
 The conda environment stored in the `waafle.yml` contains all the dependencies needed. Once you download the file, you will just have to create the conda environment starting from it:
 ```
-wget
+wget https://raw.githubusercontent.com/giacomoorsini/HGT-tools/refs/heads/main/waafle/installation/waafle.yml
 
 conda env create -f waafle.yml
 ```
 If Conda is unable to create the environment or the dependencies are not satisfied, you can try downloading and using the `waafle_exported.yml` file. If this also doesn't work, you should just create a semi-empty Conda environment and install each dependency manually.
 
 WAAFLE also requires a gene database and a taxonomy file to work. You can download the default ones from the main GitHub page https://github.com/biobakery/waafle
+
+Optionally, you can download and issue the `terraform.sh` script, which will download all my custom scripts to use WAAFLE and create the directory structure.
+```
+mkdir ./waafle
+cd waafle
+mkdir ./src
+wget -P ./src https://raw.githubusercontent.com/giacomoorsini/HGT-tools/refs/heads/main/waafle/installation/terraform.sh
+bash ./src/terraform.sh
+```
 
 ## How does the tool work
 Briefly, WAAFLE works by blasting the input contigs against a gene database, giving a homology score to all the matches. If the gene coordinates are not provided, the tool calculates them. Combining the input contigs, gene coordinates, `blastn` results and the taxonomy file, the tool is able to determine if a contig contains an HGT event or not: if all the genes of the contig belong to the same species, the contig doesn't contain events; if the contig contains genes from a pair of species, it is classified as a putative HGT event. More information at https://github.com/biobakery/waafle/blob/main/demo/docs/demo.md
