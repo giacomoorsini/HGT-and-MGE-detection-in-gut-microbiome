@@ -27,30 +27,30 @@ else
 fi
 
 #CHECK AND DOWLOAD ALL THE CUSTOM SCRIPTS
-if [ -f "./waafle_complete_run.sh" ]; then
+if [ -f "./src/waafle_complete_run.sh" ]; then
     echo "waafle_complete_run.sh already present"
 else
-    wget https://raw.githubusercontent.com/giacomoorsini/HGT-tools/refs/heads/main/waafle/src/PBS_final_scripts/waafle_complete_run.sh
+    wget -P ./src https://raw.githubusercontent.com/giacomoorsini/HGT-tools/refs/heads/main/waafle/src/PBS_final_scripts/waafle_complete_run.sh
 fi
-if [ -f "./manager.sh" ]; then
+if [ -f "./src/manager.sh" ]; then
     echo "manager.sh already present"
 else
-    wget https://raw.githubusercontent.com/giacomoorsini/HGT-tools/refs/heads/main/waafle/src/PBS_final_scripts/manager.sh
+    wget -P ./src https://raw.githubusercontent.com/giacomoorsini/HGT-tools/refs/heads/main/waafle/src/PBS_final_scripts/manager.sh
 fi
-if [ -f "./get_list.sh" ]; then
+if [ -f "./src/get_list.sh" ]; then
     echo "get_list.sh already present"
 else
-    wget https://raw.githubusercontent.com/giacomoorsini/HGT-tools/refs/heads/main/waafle/src/PBS_final_scripts/get_list.sh
+    wget -P ./src https://raw.githubusercontent.com/giacomoorsini/HGT-tools/refs/heads/main/waafle/src/PBS_final_scripts/get_list.sh
 fi
-if [ -f "./check_recover.sh" ]; then
+if [ -f "./src/check_recover.sh" ]; then
     echo "check_recover.sh already present"
 else
-    wget https://raw.githubusercontent.com/giacomoorsini/HGT-tools/refs/heads/main/waafle/src/PBS_final_scripts/check_recover.sh
+    wget -P ./src https://raw.githubusercontent.com/giacomoorsini/HGT-tools/refs/heads/main/waafle/src/PBS_final_scripts/check_recover.sh
 fi
-if [ -f "./config.sh" ]; then
+if [ -f "./src/config.sh" ]; then
     echo "config.sh already present"
 else
-    wget https://raw.githubusercontent.com/giacomoorsini/HGT-tools/refs/heads/main/waafle/src/PBS_final_scripts/config.sh
+    wget -P ./src https://raw.githubusercontent.com/giacomoorsini/HGT-tools/refs/heads/main/waafle/src/PBS_final_scripts/config.sh
 fi
 
 #CHECK AND DOWLOAD WAAFLE DATABASES
@@ -69,54 +69,54 @@ fi
 
 
 #CHECK AND CREATE DIRECTORIES STRUCTURE
-if [ -d "../stdir" ]; then
+if [ -d "./stdir" ]; then
     echo "stdir already exists"
 else
-    mkdir "../stdir"
+    mkdir "./stdir"
     echo "stdir created"
 fi
-if [ -d "../stdir/search" ]; then
+if [ -d "./stdir/search" ]; then
     echo "search directory already exists"
 else
-    mkdir "../stdir/search"
+    mkdir "./stdir/search"
     echo "search directory created"
 fi
-if [ -d "../stdir/genecall" ]; then
+if [ -d "./stdir/genecall" ]; then
     echo "genecall directory already exists"
 else
-    mkdir "../stdir/genecall"
+    mkdir "./stdir/genecall"
     echo "genecall directory created"
 fi
-if [ -d "../stdir/junctions" ]; then
+if [ -d "./stdir/junctions" ]; then
     echo "junctions directory already exists"
 else
-    mkdir "../stdir/junctions"
+    mkdir "./stdir/junctions"
     echo "junctions directory created"
 fi
 
-if [ -d "../meta" ]; then
+if [ -d "./meta" ]; then
     echo "meta directory already exists"
 else
-    mkdir "../meta"
+    mkdir "./meta"
     echo "meta directory created"
 fi
 
-if [ -d "../data" ]; then
+if [ -d "./data" ]; then
     echo "data directory already exists"
 else
-    mkdir "../meta"
+    mkdir "./meta"
     echo "data directory created"
 fi
 
-if [ -d "../orgscore" ]; then
+if [ -d "./orgscore" ]; then
     echo "orgscore directory already exists"
 else
-    mkdir "../orgscore"
+    mkdir "./orgscore"
     echo "orgscore directory created"
 fi
-if [ -d "../orgscore/qc" ]; then
+if [ -d "./orgscore/qc" ]; then
     echo "qc directory already exists"
 else
-    mkdir "../orgscore/qc"
+    mkdir "./orgscore/qc"
     echo "qc directory created"
 fi
