@@ -32,9 +32,11 @@ The commands are simple and are just:
 MetaCHIP PI -p test -r pcofg -t 6 -i bin_folder -x fasta -taxon GTDB_classifications.tsv
 MetaCHIP BP -p test -r pcofg -t 6
 ```
-where -p is the name of the output files, -r are the combination of taxonomic levels, -t is the number of threads, -i input folder, -x format file, -taxon is the taxonomic file
+Where -p is the name of the output files, -r are the combination of taxonomic levels, -t is the number of threads, -i input folder, -x format file, -taxon is the taxonomic file
 
 ## Custom scripts
-in the `src` folder the custom scripts I made to use metaCHIP in a cluster context are stored.
+The custom scripts I made to use metaCHIP in a cluster context are stored in the `src/PBS_final_script' folder.
+## Data analysis
+In the `data_analysis` folder the data analysis I made on metaCHIP final results
 
 
