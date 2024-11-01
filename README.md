@@ -25,4 +25,5 @@ Mobile genetic elements are vectors of HGT. These elements are mobilized through
 - Integrative Conjugative Elements (ICE)
 - Integrative Mobilizable Elements (IME)
 - Integrons
+
 As for the HGT detection issues, a gold standard tool doesn't exist.
