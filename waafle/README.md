@@ -62,11 +62,11 @@ This is the first of a 2 step optional quality control check that removes low-qu
 waafle_junctions contigs.fna contigs.gff --reads1 contigs_reads.1.fq reads2 contigs_reads.2.fq
 ```
 
-## Custom scripts
-In the `src` the custom scripts I made tou use waafle in an HPC cluster are stored.
-
 ### 5) Remove low-quality reads: `waafle_qc` (OPTIONAL)
 It uses the `waafle_junctions` output to remove contigs with weak read support at one or more junctions.
 ```
 waafle_qc contigs.lgt.tsv contigs.junctions.tsv
 ```
+
+## Custom scripts and data analysis
+In the `src` the custom scripts I made tou use waafle in an HPC cluster are stored. In the `data_analysis` folder the data analysis I carried out on the final output.
