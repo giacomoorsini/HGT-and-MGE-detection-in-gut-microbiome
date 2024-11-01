@@ -1,4 +1,4 @@
-# HGT detection tools and MGE prediction
+# HGT detection and MGE prediction tools
 This repository contains information about tools for horizontal gene transfer detection and MGE prediction. In particular, for each tool, there is:
 - a small tutorial
 - installation instructions/ conda environments for installation
